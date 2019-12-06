@@ -1,0 +1,6 @@
+title = "mj personal cgi server"
+
+[serverInfo]
+port=9001
+timeout=2000
+

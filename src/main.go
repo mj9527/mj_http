@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"mj_http/src/cgi"
+	"mj_http/src/config"
 	"net/http"
 )
 
@@ -31,5 +33,8 @@ func main() {
 	http.Handle("/", &PointsHandler{})
 	http.HandleFunc("/points_mall/pay", cgi.PayHandler)
 	http.HandleFunc("/points_mall/query", cgi.QueryHandler)
-	http.ListenAndServe(":9001", nil)
+	port := config.ServerConfig.ServerInfo.Port
+	addr := fmt.Sprintf(":%d", port)
+	fmt.Println("init addr ", addr)
+	http.ListenAndServe(addr, nil)
 }
