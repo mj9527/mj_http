@@ -17,10 +17,14 @@ const (
 )
 
 func QueryHandler(rsp http.ResponseWriter, req *http.Request) {
+	start := time.Now()
 	rsp.Write([]byte("pay handler"))
 	fmt.Println("recv pay request", req)
 
-	SendReq()
+	//	SendReq()
+	end := time.Now()
+	delta := end.Sub(start)
+	fmt.Printf("execture time %d", delta)
 
 }
 

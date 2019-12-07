@@ -13,7 +13,7 @@ type CustomConfig struct {
 	}
 }
 
-var ServerConfig CustomConfig
+var ServerConfig CustomConfig // global config
 
 func init() {
 	filePath, err := filepath.Abs("../config/config_test.toml")
