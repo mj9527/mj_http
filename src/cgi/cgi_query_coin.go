@@ -1,7 +1,6 @@
 package cgi
 
 import (
-	"fmt"
 	"github.com/mj9527/points_mall"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -19,12 +18,12 @@ const (
 func QueryHandler(rsp http.ResponseWriter, req *http.Request) {
 	start := time.Now()
 	rsp.Write([]byte("pay handler"))
-	fmt.Println("recv pay request", req)
+	log.Println("recv pay request", req)
 
 	//	SendReq()
 	end := time.Now()
 	delta := end.Sub(start)
-	fmt.Printf("execture time %d", delta)
+	log.Printf("execture time %d", delta)
 
 }
 

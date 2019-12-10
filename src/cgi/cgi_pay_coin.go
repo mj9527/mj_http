@@ -2,7 +2,10 @@ package cgi
 
 import (
 	"fmt"
+	"github.com/gorilla/schema"
+	"github.com/mj9527/points_mall"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -11,23 +14,10 @@ func init() {
 }
 
 func PayHandler(rsp http.ResponseWriter, req *http.Request) {
-	//rsp.Write([]byte("pay handler"))
-	//fmt.Fprintln(rsp, "pay handler1")
-	//fmt.Print("recv query handle", req)
 
-	//fmt.Fprintln(rsp, "method ", req.Method)
-	//fmt.Fprintln(rsp, "url ", req.URL)
-	//fmt.Fprintln(rsp, "body ", req.Body)
-	fmt.Fprintln(rsp, "address ", req.RemoteAddr)
-	fmt.Fprintln(rsp, "  ", ComposeRequest(req))
+	GetPBInterface1(req)
 
-	req.ParseForm()
-
-	fmt.Println(req.Form)
-
-	for k, v := range req.Form {
-		fmt.Printf("%v=%v\n", k, v)
-	}
+	fmt.Fprintln(rsp, ComposeRequest(req))
 }
 
 func ComposeRequest(req *http.Request) string {
@@ -41,4 +31,16 @@ func ComposeRequest(req *http.Request) string {
 		raw += string(body)
 	}
 	return raw
+}
+
+func GetPBInterface1(req *http.Request) {
+
+	req.ParseForm()
+	raw := &points_mall.PayCoinReq1{}
+
+	decoder := schema.NewDecoder()
+
+	err := decoder.Decode(raw, req.Form)
+
+	log.Printf("map struct interface [%v] err[%v]\n", raw, err)
 }
