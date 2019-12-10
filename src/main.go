@@ -8,10 +8,14 @@ import (
 	"mj_http/src/config"
 	"net/http"
 	"os"
+	"time"
 )
 
 func init() {
-	f, err := os.OpenFile("testlogfile", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+
+	day := time.Now().Format("2006-01-02")
+	day = fmt.Sprintf("../log/%s.log", day)
+	f, err := os.OpenFile(day, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		//t.Fatalf("error opening file: %v", err)
 		return
