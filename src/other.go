@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"flag"
-	"github.com/mj9527/points_mall"
 	"log"
+	"mj_http/src/points_mall"
 	"net/http"
 	"os"
 	"os/signal"
@@ -90,14 +90,14 @@ func GetPanic() {
 	log.Println("Ending the program")
 }
 
-func GetAllFieldName() {
-	raw1 := points_mall.PayCoinReq1{}
-	t := reflect.TypeOf(raw1)
-
-	for k := 0; k < t.NumField(); k++ {
-		log.Printf("filed name : %s\n", t.Field(k).Name)
-	}
-}
+//func GetAllFieldName() {
+//	raw1 := points_mall.PayCoinReq1{}
+//	t := reflect.TypeOf(raw1)
+//
+//	for k := 0; k < t.NumField(); k++ {
+//		log.Printf("filed name : %s\n", t.Field(k).Name)
+//	}
+//}
 
 func GetPBType(req *http.Request) {
 
@@ -120,15 +120,15 @@ func GetPBType(req *http.Request) {
 
 	log.Printf("json %s \n ", string(requestJson))
 
-	raw := &points_mall.PayCoinReq{}
-	err = json.Unmarshal([]byte(requestJson), raw)
-	if err != nil {
-		log.Println("failed to parse json ", err)
-		// fail
-		return
-	}
+	//raw := &points_mall.PayCoinReq{}
+	//err = json.Unmarshal([]byte(requestJson), raw)
+	//if err != nil {
+	//	log.Println("failed to parse json ", err)
+	//	// fail
+	//	return
+	//}
 
-	log.Printf("interface %v", raw)
+	//log.Printf("interface %v", raw)
 }
 
 func GetPBInterface(req *http.Request) {

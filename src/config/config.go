@@ -18,11 +18,12 @@ var ServerConfig CustomConfig // global config
 func init() {
 	filePath, err := filepath.Abs("../config/config_test.toml")
 	if err != nil {
-		log.Println("can't find file ", err)
+		log.Println("can't find file", err)
 		return
 	}
+
 	if _, err := toml.DecodeFile(filePath, &ServerConfig); err != nil {
 		panic(err)
 	}
-	log.Println("reuslt ", ServerConfig)
+	log.Println("init config", ServerConfig)
 }
