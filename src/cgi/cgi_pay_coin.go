@@ -2,14 +2,18 @@ package cgi
 
 import (
 	"context"
+	"fmt"
+	"github.com/gorilla/schema"
+	"github.com/mj9527/points_mall"
 	"google.golang.org/grpc"
 	"log"
-	"mj_http/src/points_mall"
 	"net/http"
 	"strings"
 )
 
 func PayHandler(rsp http.ResponseWriter, req *http.Request) {
+
+	request := GetPBInterface1(req)
 
 	// 建立连接到gRPC服务
 	conn, err := grpc.Dial("127.0.0.1:8028", grpc.WithInsecure())
@@ -20,25 +24,18 @@ func PayHandler(rsp http.ResponseWriter, req *http.Request) {
 	defer conn.Close()
 
 	// 创建Waiter服务的客户端
-	t := points_mall.NewGreeterClient(conn)
+	t := points_mall.NewPointMallClient(conn)
 
-	request := &points_mall.HelloRequest{
-		Name: "hello",
-	}
+	//GetPBInterface1(req)
 
-	response, err := t.SayHello(context.Background(), request)
+	response, err := t.PayCoin(context.Background(), request)
 	if err != nil {
 		log.Println("call failed ")
 	}
 
 	log.Println("recv response", response)
 
-	//log.Printf("context %v", req.Context())
-	//
-	//fmt.Fprintln(rsp, "remote address ", req.RemoteAddr)
-	//GetPBInterface1(req)
-	//
-	//fmt.Fprintln(rsp, ComposeRequest(req))
+	fmt.Fprintln(rsp, response)
 }
 
 func ComposeRequest(req *http.Request) string {
@@ -73,14 +70,13 @@ func ComposeRequest(req *http.Request) string {
 	return buf.String()
 }
 
-func GetPBInterface1(req *http.Request) {
+func GetPBInterface1(req *http.Request) *points_mall.PayCoinReq {
 
-	//req.ParseForm()
-	//raw := &points_mall.PayCoinReq1{}
-	//
-	//decoder := schema.NewDecoder()
-	//
-	//err := decoder.Decode(raw, req.Form)
-	//
-	//log.Printf("map struct interface [%v] err[%v]\n", raw, err)
+	req.ParseForm()
+	raw := &points_mall.PayCoinReq{}
+	decoder := schema.NewDecoder()
+	err := decoder.Decode(raw, req.Form)
+
+	log.Printf("map struct interface [%v] err[%v]\n", raw, err)
+	return raw
 }
