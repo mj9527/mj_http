@@ -2,6 +2,7 @@ package cgi
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/gorilla/schema"
 	"github.com/mj9527/points_mall"
@@ -35,7 +36,13 @@ func PayHandler(rsp http.ResponseWriter, req *http.Request) {
 
 	log.Println("recv response", response)
 
-	fmt.Fprintln(rsp, response)
+	data, err := json.Marshal(response)
+	if err == nil {
+		fmt.Fprintln(rsp, string(data))
+	} else {
+		fmt.Fprintln(rsp, "failed to marshal json")
+	}
+
 }
 
 func ComposeRequest(req *http.Request) string {
