@@ -216,3 +216,37 @@ func ReadFromCluster() {
 	elapsed := time.Since(start)
 	fmt.Println("cluster cost", elapsed)
 }
+
+
+func GetStrKey() {
+	c, err := redis.Dial("tcp", "127.0.0.1:6379") // use redigo
+	if err != nil {
+		fmt.Println("Connect to redis error", err)
+		return
+	}
+	defer c.Close()
+
+	start := time.Now()
+
+	data, err := c.Do("get", "mj")
+	fmt.Println("data", data, "err", err)
+	if err != nil {
+		fmt.Println("failed to get mj", err)
+	}
+
+	if data == nil {
+		fmt.Println("empty data")
+	}
+
+	b, ok := data.([]byte)
+
+	fmt.Println("tansfer", string(b), ok)
+
+	//if data == "" {
+	//	fmt.Println("data is nil");
+	//}
+
+
+	elapsed := time.Since(start)
+	fmt.Println("no pipeline cost ", elapsed)
+}

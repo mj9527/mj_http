@@ -14,6 +14,8 @@ import (
 
 func PayHandler(rsp http.ResponseWriter, req *http.Request) {
 
+	log.Println("recv request ", req)
+
 	request := GetPBInterface1(req)
 
 	// 建立连接到gRPC服务
